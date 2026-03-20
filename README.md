@@ -16,16 +16,18 @@ Speaker preset is saved to `Comfyui's model folder/cosyvoice/speaker`.
 **Be notieced:** a voice preset saved with CosyVoice3/2 model, can not be used with CosyVoice2/3 model. 
 
 ## Speaker Clone node
-Load all speaker preset saved with `Save Speaker node` into a list, so you can pick one for voice clone. 
+Load all speaker presets saved with `Save Speaker node` into a list, so you can pick one for voice clone. 
 
-**Be notieced:** a voice preset saved with CosyVoice3/2 model, can not be used with CosyVoice2/3 model. 
+**Be notieced:** a voice preset saved with CosyVoice3/2 model, can not be used with CosyVoice2/3 model.   
+
 **Be notieced2:** CosyVoice's official speaker preset `spk2info.pt` from `CosyVoice-300M-SFT` model is not supported. 
 
 If you really want to use those speaker presets from `spk2info.pt`, you can find those 8 voices at:
-https://fun-audio-llm.github.io/#CosyVoice-basic
-So just download those audios then save them into speaker presets with `Save Speaker node`.
+https://fun-audio-llm.github.io/#CosyVoice-basic  
 
-When using a speaker preset is excatly the same as using that speaker's reference audio for voice clone, same process, same result. 
+Then you can just download those audios and save them into speaker presets with `Save Speaker node`.  
+
+Using a speaker preset is excatly the same as using that speaker's reference audio for voice clone, same process, same result.   
 
 ## Support CosyVoice2
 Added support for CosyVoice2 model, just in case. 
@@ -33,7 +35,6 @@ Added support for CosyVoice2 model, just in case.
 
 
 # Following is from `FL CosyVoice3`'s document'
-====
 
 # FL CosyVoice3
 
