@@ -1,41 +1,3 @@
-# FL CosyVoice3 Fork
-This is a fork of `FL CosyVoice3` for ComfyUI, which comes with some new features:
-
-## Instruct2 node
-which allow you clone a voice with instruct text. Named Instruct2 because in CosyVoice's source code, there is an instruct1 function only for CosyVoice1 model. Instruct2 is for CosyVoice2 and CosyVoice3 model.  
-
-## Save Speaker node
-Save your refernce voice and reference text's processing result into a `.pt` file, like a speaker preset, so you can reuse it later. This is a feature offered by CosyVoice itself.  
-
-Choose a refernce voice with 3~10 seconds is the best, no more than 30 seconds. 
-
-If reference text is empty, it will try to script reference audio into text as reference text. 
-
-Speaker preset is saved to `Comfyui's model folder/cosyvoice/speaker`. 
-
-**Be notieced:** a voice preset saved with CosyVoice3/2 model, can not be used with CosyVoice2/3 model. 
-
-## Speaker Clone node
-Load all speaker presets saved with `Save Speaker node` into a list, so you can pick one for voice clone. 
-
-**Be notieced:** a voice preset saved with CosyVoice3/2 model, can not be used with CosyVoice2/3 model.   
-
-**Be notieced2:** CosyVoice's official speaker preset `spk2info.pt` from `CosyVoice-300M-SFT` model is not supported. 
-
-If you really want to use those speaker presets from `spk2info.pt`, you can find those 8 voices at:
-https://fun-audio-llm.github.io/#CosyVoice-basic  
-
-Then you can just download those audios and save them into speaker presets with `Save Speaker node`.  
-
-Using a speaker preset is excatly the same as using that speaker's reference audio for voice clone, same process, same result.   
-
-## Support CosyVoice2
-Added support for CosyVoice2 model, just in case. 
-
-
-
-# Following is from `FL CosyVoice3`'s document'
-
 # FL CosyVoice3
 
 Advanced text-to-speech nodes for ComfyUI powered by the CosyVoice3 model family. Features zero-shot voice cloning, cross-lingual synthesis, and voice conversion.
@@ -64,6 +26,16 @@ Advanced text-to-speech nodes for ComfyUI powered by the CosyVoice3 model family
 | **Voice Conversion** | Convert source audio to target voice |
 | **Dialog** | Multi-speaker dialog synthesis with up to 4 voices |
 | **Audio Crop** | Trim audio to specific time ranges |
+
+## New Nodes
+| Node | Description |
+|------|-------------|
+| **Instruct2** | Clone a voice with instruct text |
+| **Save Speaker** | Save voice preset |
+| **Speaker Clone** | Voice clone with voice preset |
+| **Speaker Instruct2** | Voice clone with voice preset and instruct text |
+
+
 
 ## Installation
 
@@ -95,6 +67,38 @@ pip install -r requirements.txt
 
 Models download automatically on first use to `ComfyUI/models/cosyvoice/`.
 
+**Notice:** CosyVoice-300M won't work well, do not use. 
+
+## Nodes
+### Instruct2
+Named Instruct2 because in CosyVoice's source code, there is an instruct1 function only for CosyVoice1 model. Instruct2 is for CosyVoice2 and CosyVoice3 model.  
+
+### Save Speaker
+Choose a refernce voice with 3~10 seconds is the best, no more than 30 seconds. 
+
+If reference text is empty, it will try to script reference audio into text as reference text. 
+
+Speaker preset is saved to `Comfyui's model folder/cosyvoice/speaker`. 
+
+**Be notieced:** a voice preset saved with CosyVoice3/2 model, can not be used with CosyVoice2/3 model.   
+
+### Speaker Clone
+**Be notieced:** a voice preset saved with CosyVoice3/2 model, can not be used with CosyVoice2/3 model.   
+
+**Be notieced2:** CosyVoice's official speaker preset `spk2info.pt` from `CosyVoice-300M-SFT` model is not supported.  
+
+If you really want to use those speaker presets from `spk2info.pt`, you can find those 8 voices at:
+https://fun-audio-llm.github.io/#CosyVoice-basic  
+
+Then you can just download those audios and save them into speaker presets with `Save Speaker node`.  
+
+Using a speaker preset is excatly the same as using that speaker's reference audio for voice clone, same process, same result.   
+
+### Speaker Instruct2
+Load all speaker presets saved with `Save Speaker node` into a list, then you can pick one for tts with instruct text. 
+
+**Notice:** instruct text can not be empty.  
+
 ## Requirements
 
 - Python 3.10+
@@ -104,3 +108,5 @@ Models download automatically on first use to `ComfyUI/models/cosyvoice/`.
 ## License
 
 Apache 2.0
+
+## Changelog
