@@ -16,10 +16,7 @@ parent_dir = os.path.dirname(current_dir)
 if parent_dir not in sys.path:
     sys.path.insert(0, parent_dir)
 
-try:
-    from ..utils.audio_utils import tensor_to_comfyui_audio
-except (ImportError, ValueError):
-    from ..utils.audio_utils import tensor_to_comfyui_audio
+from utils.audio_utils import tensor_to_comfyui_audio
 
 import comfy.utils
 import folder_paths
