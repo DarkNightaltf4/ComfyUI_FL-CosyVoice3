@@ -81,6 +81,17 @@ class FL_CosyVoice3_Dialog:
                     "max": 2147483647,
                     "description": "Random seed (-1 for random)"
                 }),
+                "chunked_generation": ("BOOLEAN", {
+                    "default": False,
+                    "description": "Enable chunked streaming inference even on powerful GPUs. This produces more smaller output chunks."
+                }),
+                "chunk_size": ("INT", {
+                    "default": 0,
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "description": "Chunk size in tokens for streaming inference. 0 = use model default. Smaller values use more chunks."
+                }),
             }
         }
 
@@ -258,14 +269,16 @@ class FL_CosyVoice3_Dialog:
                 transcript = transcripts.get(speaker_id)
 
                 # Generate speech
+                stream_mode = chunked_generation or chunk_size > 0
                 if transcript:
                     # Use zero-shot with transcript
                     output = cosyvoice_model.inference_zero_shot(
                         tts_text=content,
                         prompt_text=transcript,
                         prompt_wav=temp_file,
-                        stream=False,
-                        speed=speed
+                        stream=stream_mode,
+                        speed=speed,
+                        stream_hop_len=chunk_size if chunk_size > 0 else None
                     )
                 else:
                     # Fall back to cross-lingual (no transcript)
@@ -277,8 +290,9 @@ class FL_CosyVoice3_Dialog:
                     output = cosyvoice_model.inference_cross_lingual(
                         tts_text=formatted_text,
                         prompt_wav=temp_file,
-                        stream=False,
-                        speed=speed
+                        stream=stream_mode,
+                        speed=speed,
+                        stream_hop_len=chunk_size if chunk_size > 0 else None
                     )
 
                 # Collect output chunks

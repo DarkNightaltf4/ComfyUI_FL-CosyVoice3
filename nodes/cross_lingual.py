@@ -72,6 +72,17 @@ class FL_CosyVoice3_CrossLingual:
                     "default": True,
                     "description": "Enable text normalization. Disable for CMU phonemes or special tags like <slow>"
                 }),
+                "chunked_generation": ("BOOLEAN", {
+                    "default": False,
+                    "description": "Enable chunked streaming inference even on powerful GPUs. This produces more smaller output chunks."
+                }),
+                "chunk_size": ("INT", {
+                    "default": 0,
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "description": "Chunk size in tokens for streaming inference. 0 = use model default. Smaller values use more chunks."
+                }),
             }
         }
 
@@ -177,12 +188,14 @@ class FL_CosyVoice3_CrossLingual:
             pbar.update_absolute(1, 3)
             print(f"[FL CosyVoice3 CrossLingual] Running cross-lingual inference...")
 
+            stream_mode = chunked_generation or chunk_size > 0
             output = cosyvoice_model.inference_cross_lingual(
                 tts_text=formatted_text,
                 prompt_wav=temp_file,
-                stream=False,
+                stream=stream_mode,
                 speed=speed,
-                text_frontend=text_frontend
+                text_frontend=text_frontend,
+                stream_hop_len=chunk_size if chunk_size > 0 else None
             )
 
             # Collect all output chunks (for longer text that gets split)

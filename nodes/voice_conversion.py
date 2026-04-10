@@ -62,6 +62,17 @@ class FL_CosyVoice3_VoiceConversion:
                     "max": 2147483647,
                     "description": "Random seed (-1 for random)"
                 }),
+                "chunked_generation": ("BOOLEAN", {
+                    "default": False,
+                    "description": "Enable chunked streaming inference even on powerful GPUs. This produces more smaller output chunks."
+                }),
+                "chunk_size": ("INT", {
+                    "default": 0,
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "description": "Chunk size in tokens for streaming inference. 0 = use model default. Smaller values use more chunks."
+                }),
             }
         }
 
@@ -155,11 +166,13 @@ class FL_CosyVoice3_VoiceConversion:
             pbar.update_absolute(1, 3)
             print(f"[FL CosyVoice3 VC] Running voice conversion...")
 
+            stream_mode = chunked_generation or chunk_size > 0
             output = cosyvoice_model.inference_vc(
                 source_wav=source_temp,
                 prompt_wav=target_temp,
-                stream=False,
-                speed=speed
+                stream=stream_mode,
+                speed=speed,
+                stream_hop_len=chunk_size if chunk_size > 0 else None
             )
 
             # Collect all output chunks

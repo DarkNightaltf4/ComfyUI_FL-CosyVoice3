@@ -98,6 +98,17 @@ class FL_CosyVoice3_SpeakerClone:
                     "default": True,
                     "description": "Enable text normalization. Disable for CMU phonemes or special tags"
                 }),
+                "chunked_generation": ("BOOLEAN", {
+                    "default": False,
+                    "description": "Enable chunked streaming inference even on powerful GPUs. This produces more smaller output chunks."
+                }),
+                "chunk_size": ("INT", {
+                    "default": 0,
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "description": "Chunk size in tokens for streaming inference. 0 = use model default. Smaller values use more chunks."
+                }),
             }
         }
 
@@ -179,14 +190,16 @@ class FL_CosyVoice3_SpeakerClone:
             print(f"[FL CosyVoice3 SpeakerClone] Injected spk2info into model frontend")
 
             print(f"[FL CosyVoice3 SpeakerClone] Running inference_zero_shot...")
+            stream_mode = chunked_generation or chunk_size > 0
             output = cosyvoice_model.inference_zero_shot(
                 tts_text=text,
                 prompt_text="",
                 prompt_wav=None,
                 zero_shot_spk_id=spk_id,
-                stream=False,
+                stream=stream_mode,
                 speed=speed,
                 text_frontend=text_frontend,
+                stream_hop_len=chunk_size if chunk_size > 0 else None,
             )
 
             # Collect all output chunks

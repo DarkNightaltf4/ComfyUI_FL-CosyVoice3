@@ -107,6 +107,17 @@ class FL_CosyVoice3_SpeakerInstruct2:
                     "default": True,
                     "description": "Enable text normalization. Disable for CMU phonemes or special tags"
                 }),
+                "chunked_generation": ("BOOLEAN", {
+                    "default": False,
+                    "description": "Enable chunked streaming inference even on powerful GPUs. This produces more smaller output chunks."
+                }),
+                "chunk_size": ("INT", {
+                    "default": 0,
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "description": "Chunk size in tokens for streaming inference. 0 = use model default. Smaller values use more chunks."
+                }),
             }
         }
 
@@ -218,14 +229,16 @@ class FL_CosyVoice3_SpeakerInstruct2:
 
             # Step 3: Run inference_instruct2 with zero_shot_spk_id, no prompt_wav
             print(f"[FL CosyVoice3 SpeakerInstruct2] Running inference_instruct2...")
+            stream_mode = chunked_generation or chunk_size > 0
             output = cosyvoice_model.inference_instruct2(
                 tts_text=text,
                 instruct_text=formatted_instruct,
                 prompt_wav=None,
                 zero_shot_spk_id=spk_id,
-                stream=False,
+                stream=stream_mode,
                 speed=speed,
                 text_frontend=text_frontend,
+                stream_hop_len=chunk_size if chunk_size > 0 else None,
             )
 
             # Collect all output chunks
