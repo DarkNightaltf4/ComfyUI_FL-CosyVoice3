@@ -143,6 +143,10 @@ class FL_CosyVoice3_Instruct2:
                     "step": 1,
                     "description": "Chunk size in tokens for streaming inference. 0 = use model default. Smaller values use more chunks."
                 }),
+                "verbose": ("BOOLEAN", {
+                    "default": False,
+                    "description": "Show detailed chunk processing messages in console"
+                }),
             }
         }
 
@@ -156,7 +160,8 @@ class FL_CosyVoice3_Instruct2:
         seed: int = -1,
         text_frontend: bool = True,
         chunked_generation: bool = False,
-        chunk_size: int = 0
+        chunk_size: int = 0,
+        verbose: bool = False
     ) -> Tuple[Dict[str, Any]]:
         """
         Generate speech with instruct-based style control and voice cloning.
@@ -290,7 +295,8 @@ class FL_CosyVoice3_Instruct2:
             for chunk in output:
                 chunk_count += 1
                 all_speech.append(chunk['tts_speech'])
-                print(f"[FL CosyVoice3 Instruct2] Processed chunk {chunk_count}")
+                if verbose:
+                    print(f"[FL CosyVoice3 Instruct2] Processed chunk {chunk_count}")
 
             if not all_speech:
                 raise RuntimeError("No audio was generated. Check model and inputs.")

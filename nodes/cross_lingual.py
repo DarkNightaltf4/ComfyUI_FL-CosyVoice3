@@ -83,6 +83,10 @@ class FL_CosyVoice3_CrossLingual:
                     "step": 1,
                     "description": "Chunk size in tokens for streaming inference. 0 = use model default. Smaller values use more chunks."
                 }),
+                "verbose": ("BOOLEAN", {
+                    "default": False,
+                    "description": "Show detailed chunk processing messages in console"
+                }),
             }
         }
 
@@ -96,7 +100,8 @@ class FL_CosyVoice3_CrossLingual:
         seed: int = -1,
         text_frontend: bool = True,
         chunked_generation: bool = False,
-        chunk_size: int = 0
+        chunk_size: int = 0,
+        verbose: bool = False
     ) -> Tuple[Dict[str, Any]]:
         """
         Generate cross-lingual speech
@@ -206,7 +211,8 @@ class FL_CosyVoice3_CrossLingual:
             for chunk in output:
                 chunk_count += 1
                 all_speech.append(chunk['tts_speech'])
-                print(f"[FL CosyVoice3 CrossLingual] Processed chunk {chunk_count}")
+                if verbose:
+                    print(f"[FL CosyVoice3 CrossLingual] Processed chunk {chunk_count}")
 
             # Concatenate all chunks
             if len(all_speech) > 1:

@@ -118,6 +118,10 @@ class FL_CosyVoice3_SpeakerInstruct2:
                     "step": 1,
                     "description": "Chunk size in tokens for streaming inference. 0 = use model default. Smaller values use more chunks."
                 }),
+                "verbose": ("BOOLEAN", {
+                    "default": False,
+                    "description": "Show detailed chunk processing messages in console"
+                }),
             }
         }
 
@@ -132,6 +136,7 @@ class FL_CosyVoice3_SpeakerInstruct2:
         text_frontend: bool = True,
         chunked_generation: bool = False,
         chunk_size: int = 0,
+        verbose: bool = False,
     ) -> Tuple[Dict[str, Any]]:
 
         print(f"\n{'='*60}")
@@ -249,7 +254,8 @@ class FL_CosyVoice3_SpeakerInstruct2:
             for chunk in output:
                 chunk_count += 1
                 all_speech.append(chunk["tts_speech"])
-                print(f"[FL CosyVoice3 SpeakerInstruct2] Processed chunk {chunk_count}")
+                if verbose:
+                    print(f"[FL CosyVoice3 SpeakerInstruct2] Processed chunk {chunk_count}")
 
             if not all_speech:
                 raise RuntimeError("No audio was generated. Check model and inputs.")

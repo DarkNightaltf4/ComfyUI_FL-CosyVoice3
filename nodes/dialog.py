@@ -92,6 +92,10 @@ class FL_CosyVoice3_Dialog:
                     "step": 1,
                     "description": "Chunk size in tokens for streaming inference. 0 = use model default. Smaller values use more chunks."
                 }),
+                "verbose": ("BOOLEAN", {
+                    "default": False,
+                    "description": "Show detailed chunk processing messages in console"
+                }),
             }
         }
 
@@ -191,7 +195,8 @@ class FL_CosyVoice3_Dialog:
         speaker_D_Audio: Optional[Dict[str, Any]] = None,
         seed: int = -1,
         chunked_generation: bool = False,
-        chunk_size: int = 0
+        chunk_size: int = 0,
+        verbose: bool = False
     ) -> Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any], Dict[str, Any], Dict[str, Any], str]:
         """
         Generate multi-speaker dialog audio.

@@ -73,6 +73,10 @@ class FL_CosyVoice3_VoiceConversion:
                     "step": 1,
                     "description": "Chunk size in tokens for streaming inference. 0 = use model default. Smaller values use more chunks."
                 }),
+                "verbose": ("BOOLEAN", {
+                    "default": False,
+                    "description": "Show detailed chunk processing messages in console"
+                }),
             }
         }
 
@@ -84,7 +88,8 @@ class FL_CosyVoice3_VoiceConversion:
         speed: float = 1.0,
         seed: int = -1,
         chunked_generation: bool = False,
-        chunk_size: int = 0
+        chunk_size: int = 0,
+        verbose: bool = False
     ) -> Tuple[Dict[str, Any]]:
         """
         Convert source voice to target voice
@@ -183,7 +188,8 @@ class FL_CosyVoice3_VoiceConversion:
             for chunk in output:
                 chunk_count += 1
                 all_speech.append(chunk['tts_speech'])
-                print(f"[FL CosyVoice3 VC] Processed chunk {chunk_count}")
+                if verbose:
+                    print(f"[FL CosyVoice3 VC] Processed chunk {chunk_count}")
 
             # Concatenate all chunks
             if len(all_speech) > 1:
