@@ -143,7 +143,9 @@ class FL_CosyVoice3_ZeroShot:
         reference_audio: Dict[str, Any],
         speed: float = 1.0,
         seed: int = -1,
-        text_frontend: bool = True
+        text_frontend: bool = True,
+        chunked_generation: bool = False,
+        chunk_size: int = 0
     ) -> Tuple[Dict[str, Any]]:
         """
         Clone voice from reference audio

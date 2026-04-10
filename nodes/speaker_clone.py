@@ -120,6 +120,8 @@ class FL_CosyVoice3_SpeakerClone:
         speed: float = 1.0,
         seed: int = -1,
         text_frontend: bool = True,
+        chunked_generation: bool = False,
+        chunk_size: int = 0,
     ) -> Tuple[Dict[str, Any]]:
         """
         Load a speaker preset and synthesize speech via inference_zero_shot.

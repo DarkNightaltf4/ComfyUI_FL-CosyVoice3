@@ -94,7 +94,9 @@ class FL_CosyVoice3_CrossLingual:
         speed: float = 1.0,
         target_language: str = "auto",
         seed: int = -1,
-        text_frontend: bool = True
+        text_frontend: bool = True,
+        chunked_generation: bool = False,
+        chunk_size: int = 0
     ) -> Tuple[Dict[str, Any]]:
         """
         Generate cross-lingual speech

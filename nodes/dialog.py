@@ -189,7 +189,9 @@ class FL_CosyVoice3_Dialog:
         speed: float = 1.0,
         speaker_C_Audio: Optional[Dict[str, Any]] = None,
         speaker_D_Audio: Optional[Dict[str, Any]] = None,
-        seed: int = -1
+        seed: int = -1,
+        chunked_generation: bool = False,
+        chunk_size: int = 0
     ) -> Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any], Dict[str, Any], Dict[str, Any], str]:
         """
         Generate multi-speaker dialog audio.

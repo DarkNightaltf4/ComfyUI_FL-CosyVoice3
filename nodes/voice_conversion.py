@@ -82,7 +82,9 @@ class FL_CosyVoice3_VoiceConversion:
         source_audio: Dict[str, Any],
         target_audio: Dict[str, Any],
         speed: float = 1.0,
-        seed: int = -1
+        seed: int = -1,
+        chunked_generation: bool = False,
+        chunk_size: int = 0
     ) -> Tuple[Dict[str, Any]]:
         """
         Convert source voice to target voice

@@ -130,6 +130,8 @@ class FL_CosyVoice3_SpeakerInstruct2:
         speed: float = 1.0,
         seed: int = -1,
         text_frontend: bool = True,
+        chunked_generation: bool = False,
+        chunk_size: int = 0,
     ) -> Tuple[Dict[str, Any]]:
 
         print(f"\n{'='*60}")
