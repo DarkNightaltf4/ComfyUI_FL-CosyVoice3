@@ -18,7 +18,7 @@ if parent_dir not in sys.path:
 try:
     from ..utils.audio_utils import save_raw_audio_to_tempfile, cleanup_temp_file
 except (ImportError, ValueError):
-    from utils.audio_utils import save_raw_audio_to_tempfile, cleanup_temp_file
+    from ..utils.audio_utils import save_raw_audio_to_tempfile, cleanup_temp_file
 
 import comfy.utils
 import folder_paths

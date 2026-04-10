@@ -18,7 +18,7 @@ if parent_dir not in sys.path:
 try:
     from ..utils.audio_utils import tensor_to_comfyui_audio, prepare_audio_for_cosyvoice, cleanup_temp_file
 except (ImportError, ValueError):
-    from utils.audio_utils import tensor_to_comfyui_audio, prepare_audio_for_cosyvoice, cleanup_temp_file
+    from ..utils.audio_utils import tensor_to_comfyui_audio, prepare_audio_for_cosyvoice, cleanup_temp_file
 
 # ComfyUI progress bar
 import comfy.utils
